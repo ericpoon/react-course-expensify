@@ -14,10 +14,6 @@ import './styles/styles.scss';
 
 const store = configureStore();
 
-store.dispatch(addExpense({amount: 4500, description: 'Water Bill'}));
-store.dispatch(addExpense({amount: 0, description: 'Gas Bill', createdAt: 1000}));
-store.dispatch(addExpense({amount: 109500, description: 'Rent'}));
-
 const jsx = (
     <Provider store={store}>
         <AppRouter/>
