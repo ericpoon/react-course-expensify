@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
+export const selectFilteredExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
     return expenses
         .filter(expense => {
             const {createdAt, description, amount} = expense;
@@ -21,4 +21,10 @@ export const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate})
                 return false;
             }
         });
+};
+
+export const selectExpensesTotal = (expenses) => {
+    return expenses
+        .map(ex => ex.amount)
+        .reduce((sum, value) => sum + value, 0);
 };
