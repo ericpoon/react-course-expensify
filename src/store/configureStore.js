@@ -1,6 +1,11 @@
-import {combineReducers, createStore} from 'redux';
+import {combineReducers, createStore, applyMiddleware, compose} from 'redux';
 import expensesReducer from '../reducers/expenses';
 import filtersReducer from '../reducers/filters';
+import thunk from 'redux-thunk';
+
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+/* eslint-enable */
 
 export default () => {
     const store = createStore(
@@ -8,9 +13,7 @@ export default () => {
             expenses: expensesReducer,
             filters: filtersReducer,
         }),
-        /* eslint-disable no-underscore-dangle */
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-        /* eslint-enable */
+        composeEnhancers(applyMiddleware(thunk)),
     );
 
     return store;

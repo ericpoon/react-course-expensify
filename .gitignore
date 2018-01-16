@@ -1,5 +1,7 @@
 public/dist/
 
+.env.*
+
 npm-debug.*
 
 # Logs
