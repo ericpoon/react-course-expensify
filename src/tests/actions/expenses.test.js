@@ -1,12 +1,13 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {
-    startAddExpense,
     addExpense,
     editExpense,
     removeExpense,
     setExpenses,
+    startAddExpense,
     startSetExpenses,
+    startRemoveExpense,
 } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
@@ -144,5 +145,28 @@ it('should fetch the expenses from firebase', () => {
                 type: 'SET_EXPENSES',
                 expenses,
             });
+            /*
+            * No need to check state,
+            * as changing state is reducer's responsibility
+            * // expect(store.getState()).toEqual(expenses);
+            */
+        });
+});
+
+it('should remove an expense from firebase', () => {
+    const store = createMockStore({});
+    const id = expenses[0].id;
+    expect.assertions(2);
+    return store.dispatch(startRemoveExpense(id))
+        .then(() => {
+            const actions = store.getActions();
+            expect(actions[0]).toEqual({
+                type: 'REMOVE_EXPENSE',
+                id,
+            });
+            return database.ref(`expenses/${id}`);
+        })
+        .then(snapshot => {
+            expect(snapshot.val).toBeFalsy(); // cannot call snapshot.val(), it's not a function
         });
 });
