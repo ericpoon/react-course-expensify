@@ -8,6 +8,7 @@ import {
     startAddExpense,
     startSetExpenses,
     startRemoveExpense,
+    startEditExpense,
 } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
@@ -164,9 +165,29 @@ it('should remove an expense from firebase', () => {
                 type: 'REMOVE_EXPENSE',
                 id,
             });
-            return database.ref(`expenses/${id}`);
+            return database.ref(`expenses/${id}`).once('value');
         })
         .then(snapshot => {
-            expect(snapshot.val).toBeFalsy(); // cannot call snapshot.val(), it's not a function
+            expect(snapshot.val()).toBeFalsy();
+        });
+});
+
+it('should edit an expense from firebase', () => {
+    const store = createMockStore({});
+    const id = expenses[0].id;
+    const updates = {amount: 99887712345};
+    expect.assertions(2);
+    return store.dispatch(startEditExpense(id, updates))
+        .then(() => {
+            const actions = store.getActions();
+            expect(actions[0]).toEqual({
+                type: 'EDIT_EXPENSE',
+                id,
+                updates,
+            });
+            return database.ref(`expenses/${id}`).once('value');
+        })
+        .then(snapshot => {
+            expect(snapshot.val().amount).toEqual(updates.amount);
         });
 });
