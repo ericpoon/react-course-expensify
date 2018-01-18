@@ -13,6 +13,8 @@ import {
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
+const uid = 'this_is_my_test_uid';
+const defaultAuthState = {auth: {uid}};
 const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
@@ -20,7 +22,7 @@ beforeEach((done) => {
     expenses.forEach(({id, description, note, amount, createdAt}) => {
         expensesData[id] = {description, note, amount, createdAt};
     });
-    database.ref('expenses').set(expensesData).then(() => done());
+    database.ref(`users/${uid}/expenses`).set(expensesData).then(() => done());
 });
 
 it('should setup remove expense action object', () => {
@@ -59,7 +61,7 @@ it('should setup add expense action object with provided values', () => {
 });
 
 it('should add expense to database and store', () => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const expenseData = {
         description: 'Mouse',
         amount: 80,
@@ -80,7 +82,7 @@ it('should add expense to database and store', () => {
                 },
             });
 
-            return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+            return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value');
         })
         .then(snapshot => {
             expect(snapshot.val()).toEqual(expenseData);
@@ -88,7 +90,7 @@ it('should add expense to database and store', () => {
 });
 
 it('should add expense with defaults to database and store', () => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const expenseDefaults = {
         description: '',
         note: '',
@@ -109,7 +111,7 @@ it('should add expense with defaults to database and store', () => {
                 },
             });
 
-            return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+            return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value');
         })
         .then(snapshot => {
             expect(snapshot.val()).toEqual(expenseDefaults);
@@ -125,13 +127,13 @@ it('should setup set expenses action object', () => {
 });
 
 it('should fetch the expenses from firebase', () => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
 
     expect.assertions(1);
 
     return store.dispatch(startSetExpenses())
         .then(() => {
-            return database.ref('expenses').once('value');
+            return database.ref(`users/${uid}/expenses`).once('value');
         })
         .then(snapshot => {
             const actions = store.getActions();
@@ -155,7 +157,7 @@ it('should fetch the expenses from firebase', () => {
 });
 
 it('should remove an expense from firebase', () => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const id = expenses[0].id;
     expect.assertions(2);
     return store.dispatch(startRemoveExpense(id))
@@ -165,7 +167,7 @@ it('should remove an expense from firebase', () => {
                 type: 'REMOVE_EXPENSE',
                 id,
             });
-            return database.ref(`expenses/${id}`).once('value');
+            return database.ref(`users/${uid}/expenses/${id}`).once('value');
         })
         .then(snapshot => {
             expect(snapshot.val()).toBeFalsy();
@@ -173,7 +175,7 @@ it('should remove an expense from firebase', () => {
 });
 
 it('should edit an expense from firebase', () => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const id = expenses[0].id;
     const updates = {amount: 99887712345};
     expect.assertions(2);
@@ -185,7 +187,7 @@ it('should edit an expense from firebase', () => {
                 id,
                 updates,
             });
-            return database.ref(`expenses/${id}`).once('value');
+            return database.ref(`users/${uid}/expenses/${id}`).once('value');
         })
         .then(snapshot => {
             expect(snapshot.val().amount).toEqual(updates.amount);
