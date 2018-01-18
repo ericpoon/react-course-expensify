@@ -7,11 +7,11 @@ export class EditExpensePage extends React.Component {
     // id = this.props.match.params.id;
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense);
-        this.props.history.push('/');
+        this.props.history.push('/dashboard');
     };
     onRemoveClick = () => {
         this.props.startRemoveExpense(this.props.expense.id);
-        this.props.history.push('/');
+        this.props.history.push('/dashboard');
     };
 
     render() {

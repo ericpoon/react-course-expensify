@@ -25,12 +25,12 @@ it('should render EditExpensePage correctly', () => {
 it('should handle editExpense', () => {
     const expenseUpdates = {description: 'new description', amount: 1200};
     wrapper.find('ExpenseForm').prop('onSubmit')(expenseUpdates);
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startEditExpense).toHaveBeenLastCalledWith(expenses[0].id, expenseUpdates);
 });
 
 it('should handle removeExpense', () => {
     wrapper.find('button').simulate('click');
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startRemoveExpense).toHaveBeenLastCalledWith(expenses[0].id);
 });
