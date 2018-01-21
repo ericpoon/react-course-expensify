@@ -19,3 +19,9 @@
   flex-direction: row;
   padding: $s-size 0;
 }
+
+.header__actions {
+  >button {
+    margin-left: $m-size;
+  }
+}

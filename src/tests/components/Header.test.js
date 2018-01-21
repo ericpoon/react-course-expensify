@@ -15,6 +15,6 @@ it('should render Header correctly', () => {
 it('should call startLogout on button click', () => {
     const startLogout = jest.fn();
     wrapper.setProps({startLogout: startLogout});
-    wrapper.find('button').simulate('click');
+    wrapper.find('button').at(1).simulate('click');
     expect(startLogout).toHaveBeenCalled();
 });
