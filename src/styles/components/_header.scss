@@ -1,0 +1,21 @@
+.header {
+  background: $dark-blue
+}
+
+.header__title {
+  color: white;
+
+  // clears default decoration for link (the underline)
+  text-decoration: none;
+  h1 {
+    margin: 0;
+  }
+}
+
+.header__content {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: $s-size 0;
+}

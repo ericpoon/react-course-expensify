@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {ExpensesSummary} from '../../components/expensesSummary';
+import {ExpensesSummary} from '../../components/ExpensesSummary';
 
 it('should render ExpensesSummary correctly', () => {
     const wrapper = shallow(<ExpensesSummary expenseTotal={0} expenseCount={0}/>);

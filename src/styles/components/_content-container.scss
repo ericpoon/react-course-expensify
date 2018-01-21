@@ -1,0 +1,6 @@
+// to center everything nicely
+.content-container {
+  margin: 0 auto; // auto evenly distributes space on left and right
+  padding: 0 $m-size 0 $m-size;
+  max-width: 80rem;
+}
