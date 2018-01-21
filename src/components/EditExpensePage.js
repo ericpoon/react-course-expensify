@@ -1,22 +1,41 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ExpenseForm from './ExpenseForm';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 import {startEditExpense, startRemoveExpense} from '../actions/expenses';
 
 export class EditExpensePage extends React.Component {
-    // id = this.props.match.params.id;
+    constructor() {
+        super();
+        this.state = {
+            isModalOpen: false,
+        };
+    }
+
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense);
         this.props.history.push('/dashboard');
     };
     onRemoveClick = () => {
+        this.setState({isModalOpen: true});
+    };
+    onRemoveConfirm = () => {
         this.props.startRemoveExpense(this.props.expense.id);
         this.props.history.push('/dashboard');
+    };
+    onRemoveCancel = () => {
+        this.setState({isModalOpen: false});
     };
 
     render() {
         return (
             <div>
+                <DeleteConfirmationModal
+                    expense={this.props.expense}
+                    isOpen={this.state.isModalOpen}
+                    onRemoveConfirm={this.onRemoveConfirm}
+                    onRemoveCancel={this.onRemoveCancel}
+                />
                 <div className={'page-header'}>
                     <div className={'content-container'}>
                         <h1 className={'page-header__title'}>Edit Expense</h1>

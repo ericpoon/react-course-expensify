@@ -1,0 +1,45 @@
+.modal {
+  outline: none;
+  background: $off-white;
+  max-width: 60rem;
+  padding: $l-size;
+}
+
+.modal__wrapper {
+  > .ReactModal__Overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 200ms ease-in-out;
+    opacity: 0;
+  }
+  > .ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+  > .ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+}
+
+
+.modal__body {
+  > h3 {
+    text-align: center;
+    margin: 0 0 $s-size 0;
+  }
+  > p {
+    margin: 0 0 $s-size 0;
+    > span {
+      font-weight: 700;
+    }
+  }
+}
+
+.modal__actions {
+  margin: $m-size 0 0 0;
+  display: flex;
+  justify-content: center;
+  > button {
+    margin-right: $s-size;
+  }
+}

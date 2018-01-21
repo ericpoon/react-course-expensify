@@ -2,6 +2,20 @@
 
 exports[`should render EditExpensePage correctly 1`] = `
 <div>
+  <DeleteConfirmationModal
+    expense={
+      Object {
+        "amount": 195,
+        "createdAt": 0,
+        "description": "Gum",
+        "id": "1",
+        "note": "",
+      }
+    }
+    isOpen={false}
+    onRemoveCancel={[Function]}
+    onRemoveConfirm={[Function]}
+  />
   <div
     className="page-header"
   >

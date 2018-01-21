@@ -19,18 +19,24 @@ beforeEach(() => {
 });
 
 it('should render EditExpensePage correctly', () => {
+    expect(wrapper.state('isModalOpen')).toBeFalsy();
     expect(wrapper).toMatchSnapshot();
 });
 
-it('should handle editExpense', () => {
+it('should handle startEditExpense', () => {
     const expenseUpdates = {description: 'new description', amount: 1200};
     wrapper.find('ExpenseForm').prop('onSubmit')(expenseUpdates);
     expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startEditExpense).toHaveBeenLastCalledWith(expenses[0].id, expenseUpdates);
 });
 
-it('should handle removeExpense', () => {
-    wrapper.find('button').simulate('click');
+it('should handle startRemoveExpense', () => {
+    wrapper.find('DeleteConfirmationModal').prop('onRemoveConfirm')(expenses[0].id);
     expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startRemoveExpense).toHaveBeenLastCalledWith(expenses[0].id);
+});
+
+it('should open confirmation modal after clicking removeExpense', () => {
+    wrapper.find('div div button').simulate('click');
+    expect(wrapper.state('isModalOpen')).toBeTruthy();
 });
