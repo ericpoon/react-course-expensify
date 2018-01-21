@@ -8,13 +8,16 @@ export class ExpensesSummary extends React.Component {
     render() {
         const count = this.props.expenseCount;
         const total = numeral(this.props.expenseTotal).format('$0,0.00');
+        const hiddenCount = this.props.hiddenCount;
         const expenseWord = count === 1 ? 'expense' : 'expenses';
+        const hiddenExpenseWord = hiddenCount === 1 ? 'expense' : 'expenses';
         return (
             <div className={'page-header'}>
                 <div className={'content-container'}>
                     <h1 className={'page-header__title'}>
                         Viewing <span>{count}</span> {expenseWord}, totalling <span>{total}</span>
                     </h1>
+                    {hiddenCount > 0 && <p>{hiddenCount} {hiddenExpenseWord} hidden, clear filters to view all.</p>}
                     <div className={'page-header__actions'}>
                         <Link className={'button'} to={'/create'}>Add Expense</Link>
                     </div>
@@ -25,8 +28,10 @@ export class ExpensesSummary extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const totalCountWithoutFilters = state.expenses.length;
     const expenses = selectFilteredExpenses(state.expenses, state.filters);
     return {
+        hiddenCount: totalCountWithoutFilters - expenses.length,
         expenseCount: expenses.length,
         expenseTotal: selectExpensesTotal(expenses),
     };
