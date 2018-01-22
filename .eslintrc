@@ -1,0 +1,61 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "modules": true,
+      "classes": true,
+      "jsx": true
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "local",
+        "args": "none"
+      }
+    ],
+    "quotes": [
+      "warn",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "global-require": "off",
+    "one-var": "off",
+    "arrow-body-style": "off",
+
+    "import/no-extraneous-dependencies": "off",
+    "import/no-named-as-default": "off",
+
+    "jsx-a11y/no-autofocus": "off",
+    // https://w3c.github.io/html/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": [
+          "Link"
+        ],
+        "specialLink": [
+          "to"
+        ]
+      }
+    ],
+
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "react/no-unescaped-entities": "off"
+  }
+}
