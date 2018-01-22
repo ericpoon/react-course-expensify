@@ -11,8 +11,9 @@ import {
     startEditExpense,
 } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
-import database from '../../firebase/firebase';
+import firebase from '../../firebase/firebase';
 
+const database = firebase.database();
 const uid = 'this_is_my_test_uid';
 const defaultAuthState = {auth: {uid}};
 const createMockStore = configureMockStore([thunk]);

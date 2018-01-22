@@ -16,9 +16,9 @@
 .box-layout__box {
   background: fade_out(white, 0.15);
   border-radius: 3px;
-  padding: $l-size $m-size;
+  padding: $l-size;
   text-align: center;
-  width: 25rem;
+  width: 30rem;
 }
 
 .box-layout__title {
@@ -27,4 +27,12 @@
   // h1 is large enough, we may use a small line-height
   // so we're overriding the default line-height (1.6) we set
   line-height: 1;
+}
+
+.box-layout__actions {
+  display: flex;
+  flex-direction: column;
+  > button {
+    margin-top: $s-size;
+  }
 }

@@ -1,5 +1,6 @@
-import uuid from 'uuid';
-import database from '../firebase/firebase';
+import firebase from '../firebase/firebase';
+
+const database = firebase.database();
 
 export const startAddExpense = (expenseData = {}) => {
     return (dispatch, getState) => {
