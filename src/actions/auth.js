@@ -1,9 +1,10 @@
 import firebase, { googleAuthProvider, facebookAuthProvider } from '../firebase/firebase';
 
-export const login = (uid, name) => ({
+export const login = (uid, name, provider) => ({
   type: 'LOGIN',
   uid,
   name,
+  provider,
 });
 
 export const startGoogleLogin = () => {
@@ -21,10 +22,14 @@ export const logout = () => ({
 });
 
 export const startLogout = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     /* How to sign out and prevent auto login next time:
              * https://www.udemy.com/react-2nd-edition/learn/v4/questions/3058926
              */
+    const loginPageUrl = process.env.LOGIN_PAGE_URL;
+    if (loginPageUrl && getState().auth.provider === 'google.com') {
+      location.assign(`https://www.google.com/accounts/Logout?continue=${loginPageUrl}`);
+    }
     return firebase.auth().signOut();
   };
 };
