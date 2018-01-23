@@ -16,16 +16,8 @@ it('should generate logout action object', () => {
 });
 
 it('should go to google logout url after clicking logout', () => {
-  const loginPageUrl = 'login page url';
   const getState = jest.fn(() => ({ auth: { provider: 'google.com' } }));
-
   window.location.assign = jest.fn();
-  global.process = {
-    env: { LOGIN_PAGE_URL: loginPageUrl },
-  };
-
-  const asyncAction = startLogout();
-
-  asyncAction(jest.fn(), getState);
-  expect(window.location.assign).toHaveBeenLastCalledWith(`https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${loginPageUrl}`);
+  startLogout()(jest.fn(), getState);
+  expect(window.location.assign).toHaveBeenLastCalledWith(expect.stringMatching(/^https:\/\/www\.google\.com\/accounts\/Logout/));
 });

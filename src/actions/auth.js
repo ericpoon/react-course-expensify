@@ -23,10 +23,7 @@ export const logout = () => ({
 
 export const startLogout = () => {
   return (dispatch, getState) => {
-    /* How to sign out and prevent auto login next time:
-             * https://www.udemy.com/react-2nd-edition/learn/v4/questions/3058926
-             */
-    const loginPageUrl = process.env.LOGIN_PAGE_URL;
+    const loginPageUrl = location.origin;
     if (loginPageUrl && getState().auth.provider === 'google.com') {
       location.assign(`https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${loginPageUrl}`);
     }
