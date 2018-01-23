@@ -28,7 +28,7 @@ export const startLogout = () => {
              */
     const loginPageUrl = process.env.LOGIN_PAGE_URL;
     if (loginPageUrl && getState().auth.provider === 'google.com') {
-      location.assign(`https://www.google.com/accounts/Logout?continue=${loginPageUrl}`);
+      location.assign(`https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${loginPageUrl}`);
     }
     return firebase.auth().signOut();
   };
