@@ -8,7 +8,7 @@ export const Header = props => (
     <div className="content-container">
       <div className="header__content">
         {/* Need to pass exact={'true'} to suppress warning */}
-        <Link to="/dashboard" exact className="header__title">
+        <Link to="/dashboard" className="header__title">
           <h1>Expensify</h1>
         </Link>
         <div className="header__actions">
